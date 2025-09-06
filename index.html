@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Company Landing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ----- keep original hero-bg behavior (you can set URL) ----- */
+    .hero-bg {
+      background-image: url(''); /* set your image URL here if needed */
+      background-size: contain;   /* はみ出さずに全体を表示 */
+      background-position: center;
+      background-repeat: no-repeat;
+      /* background-color: #f9fafb;  余白の色（グレーや白にすると自然） */
+    }
+
+    /* -------------------------
+       Preloader styles & animations (fullscreen intro)
+       ------------------------- */
+    :root {
+      --preloader-duration: 1200ms;
+      --icon-size: 64px;
+    }
+
+    #preloader {
+      position: fixed;
+      inset: 0;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      clip-path: circle(150% at 50% 50%);
+      transition: clip-path 700ms cubic-bezier(.2,.9,.2,1), opacity 350ms linear;
+      will-change: clip-path, opacity;
+    }
+
+    #preloader.reveal {
+      clip-path: circle(0% at 50% 50%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pre-inner {
+      width: 220px;
+      height: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pre-logo {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      font-weight: 700;
+      font-size: 60px;
+      letter-spacing: 0.02em;
+      color: #111827; /* gray-900 */
+      opacity: 0;
+      transform: translateY(8px) scale(.98);
+      transition: opacity 420ms ease, transform 420ms ease;
+      transition-delay: 120ms;
+      z-index: 5;
+    }
+    #preloader.animate .pre-logo {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .icon-wrap {
+      position: absolute;
+      opacity: 0;
+      transform: translateY(12px) scale(.96);
+      transition: opacity 520ms cubic-bezier(.2,.9,.2,1), transform 520ms cubic-bezier(.2,.9,.2,1);
+    }
+    #preloader.animate .icon-wrap {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .icon-inner {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      border-radius: 9999px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(16,24,40,0.08);
+      overflow: hidden;
+      animation: floatY 4000ms ease-in-out infinite;
+    }
+
+    .icon-inner img { width: 60%; height: 60%; object-fit: contain; display:block; }
+    .glyph { font-size: 1.15rem; line-height:1; }
+
+    @keyframes floatY {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    .icon-wrap { transition-delay: var(--enter-delay, 0ms); }
+    .icon-inner { animation-delay: var(--float-delay, 0s); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .icon-inner, .icon-wrap, .pre-logo { transition: none !important; animation: none !important; transform: none !important; opacity: 1 !important; }
+      #preloader { transition: none !important; clip-path: none !important; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --icon-size: 52px; }
+      .pre-inner { width: 180px; height: 180px; }
+      .pre-logo { font-size: 18px; }
+    }
+  </style>
+</head>
+
+<body class="text-gray-800">
+
+  <!-- ========== PRELOADER (full screen intro) ========== -->
+  <div id="preloader" role="status" aria-label="Loading animation. Press Space or click to skip.">
+    <!-- <div class="pre-inner" aria-hidden="true"> -->
+      <!-- positioned icons — replace glyphs by <img src="..."> for custom images -->
+      <!-- <div class="icon-wrap" style="--enter-delay:120ms; --float-delay:0s; left: calc(50% - 110px); top: calc(50% - 110px);">
+        <div class="icon-inner"><span class="glyph">☀️</span></div>
+      </div>
+
+      <div class="icon-wrap" style="--enter-delay:220ms; --float-delay:0.6s; right: calc(50% - 110px); top: calc(50% - 110px);">
+        <div class="icon-inner"><span class="glyph">☁️</span></div>
+      </div>
+
+      <div class="icon-wrap" style="--enter-delay:320ms; --float-delay:1.2s; left: calc(50% - 120px); bottom: calc(50% - 110px);">
+        <div class="icon-inner"><span class="glyph">☂️</span></div>
+      </div>
+
+      <div class="icon-wrap" style="--enter-delay:420ms; --float-delay:1.8s; right: calc(50% - 120px); bottom: calc(50% - 110px);">
+        <div class="icon-inner"><span class="glyph">👕</span></div> -->
+      <!-- </div> -->
+
+      <!-- central logo -->
+      <div class="pre-logo">（有）前谷電設</div>
+    <!-- </div> -->
+  </div>
+
+  <!-- ========== ORIGINAL PAGE CONTENT (under preloader) ========== -->
+
+  <!-- ヘッダー -->
+  <header class="absolute top-0 left-0 w-full flex justify-between items-center px-10 py-6 bg-white bg-opacity-80 shadow-sm">
+    <!-- 企業名（おしゃれロゴ風） -->
+    <div class="text-2xl font-extrabold tracking-wide text-gray-900">
+      <span class="italic">（有）前谷電設</span>
+    </div>
+
+    <!-- ナビゲーション -->
+    <nav class="flex space-x-8 text-gray-800 font-medium">
+      <a href="#about" class="hover:text-indigo-500">About</a>
+      <a href="#services" class="hover:text-indigo-500">Services</a>
+      <a href="#app" class="hover:text-indigo-500">App</a>
+      <a href="#contact" class="hover:text-indigo-500">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero（背景のみ） -->
+  <section class="hero-bg min-h-screen"></section>
+
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 bg-gray-50">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-4">Contact</h2>
+      <p class="text-gray-600">お問い合わせはメールにて: info@example.com</p>
+    </div>
+  </section>
+<script>
+  (function(){
+    const pre = document.getElementById('preloader');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 即アニメ開始
+      setTimeout(() => pre.classList.add('animate'), 40);
+
+      let revealed = false;
+      const doReveal = () => {
+        if (revealed) return;
+        revealed = true;
+        pre.classList.add('reveal');
+        setTimeout(() => { try { pre.remove(); } catch(e) {} }, 900);
+        window.removeEventListener('keydown', keyHandler);
+        pre.removeEventListener('click', doReveal);
+      };
+
+      const keyHandler = (e) => {
+        if (e.code === 'Space' || e.key === 'Escape') doReveal();
+      };
+
+      // 強制 2.5 秒で閉じる
+      const t = setTimeout(doReveal, 2500);
+
+      // ユーザーがクリックやキーでスキップ可能
+      pre.addEventListener('click', () => { clearTimeout(t); doReveal(); });
+      window.addEventListener('keydown', keyHandler);
+    });
+  })();
+</script>
